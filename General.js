@@ -8,7 +8,6 @@ var moveRight = false;
 var moveDown = false;
 var moveLeft = false;
 init(size);
-startGame(4);
 
 function showMatrix() {
     matrixView.innerHTML = '';
