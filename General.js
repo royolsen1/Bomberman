@@ -8,6 +8,7 @@ var moveRight = false;
 var moveDown = false;
 var moveLeft = false;
 init(size);
+startGame(4);
 
 function showMatrix() {
     matrixView.innerHTML = '';
@@ -32,16 +33,16 @@ function showMatrix() {
                 }
             }
             if (modelCell.isPlayer == 1) {
-                viewCell.style.backgroundColor = 'purple';
+                viewCell.style.backgroundImage = 'url("bombermanP1.png")';
             }
             if (modelCell.isPlayer == 2) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bombermanP2.png")';
             }
             if (modelCell.isPlayer == 3) {
-                viewCell.style.backgroundColor = 'blue';
+                viewCell.style.backgroundImage = 'url("bombermanP3.png")';
             }
             if (modelCell.isPlayer == 4) {
-                viewCell.style.backgroundColor = 'red';
+                viewCell.style.backgroundImage = 'url("bombermanP4.png")';
             }
             if (modelCell.isExplotion > 0) {
                 viewCell.style.backgroundColor = 'orange';
