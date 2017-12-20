@@ -8,6 +8,7 @@ var moveRight = false;
 var moveDown = false;
 var moveLeft = false;
 init(size);
+startGame(1);
 
 function showMatrix() {
     matrixView.innerHTML = '';
@@ -48,8 +49,8 @@ function showMatrix() {
                 modelCell.isExplotion--;
             }
             if (modelCell.isPlayer > 0 && modelCell.isExplotion > 0) {
+                players.nr[modelCell.isPlayer - 1].dead = true;
                 modelCell.isPlayer = 0;
-                players.nr[0].dead = true;
             }
         }
     }
@@ -185,7 +186,7 @@ function placeObjects() {
 function startGame(nr) {
     numberOfPlayers = nr;
     document.getElementById('playerSelect').innerHTML = '';
-    initPlayers(nr);
+    initPlayers();
     placeObjects();
     showMatrix();
     game();
