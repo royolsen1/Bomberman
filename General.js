@@ -25,7 +25,7 @@ function showMatrix() {
             if (modelCell.isWall) {
                 viewCell.style.backgroundColor = 'grey';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundImage = 'url("wall.png")';
+                viewCell.style.backgroundImage = 'orange';
             } else if (modelCell.isPlayer == 0) {
                 viewCell.style.backgroundColor = 'green';
             }
