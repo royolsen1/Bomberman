@@ -9,6 +9,7 @@ var moveDown = false;
 var moveLeft = false;
 var playerNr = 0;
 init(size);
+startGame(4);
 
 function changePlayer(player) {
     playerNr = player;
@@ -25,33 +26,33 @@ function showMatrix() {
             if (modelCell.isWall) {
                 viewCell.style.backgroundColor = 'grey';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundImage = 'orange';
+                viewCell.style.backgroundColor = 'lightgrey';
             } else if (modelCell.isPlayer == 0) {
                 viewCell.style.backgroundColor = 'green';
             }
             if (modelCell.isBomb0 > 0) {
-                viewCell.style.backgroundImage = 'url("bomb.png")';
+                viewCell.style.backgroundColor = 'black';
                 modelCell.isBomb0--;
                 if (modelCell.isBomb0 == 0) {
                     explotion(rowCounter, cellCounter, 0);
                 }
             }
             if (modelCell.isBomb1 > 0) {
-                viewCell.style.backgroundImage = 'url("bomb.png")';
+                viewCell.style.backgroundColor = 'black';
                 modelCell.isBomb1--;
                 if (modelCell.isBomb1 == 0) {
                     explotion(rowCounter, cellCounter, 1);
                 }
             }
             if (modelCell.isBomb2 > 0) {
-                viewCell.style.backgroundImage = 'url("bomb.png")';
+                viewCell.style.backgroundColor = 'black';
                 modelCell.isBomb2--;
                 if (modelCell.isBomb2 == 0) {
                     explotion(rowCounter, cellCounter, 2);
                 }
             }
             if (modelCell.isBomb3 > 0) {
-                viewCell.style.backgroundImage = 'url("bomb.png")';
+                viewCell.style.backgroundColor = 'black';
                 modelCell.isBomb3--;
                 if (modelCell.isBomb3 == 0) {
                     explotion(rowCounter, cellCounter, 3);
