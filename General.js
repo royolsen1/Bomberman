@@ -26,54 +26,54 @@ function showMatrix() {
             if (modelCell.isWall) {
                 viewCell.style.backgroundColor = 'grey';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundColor = 'lightgrey';
+                viewCell.style.backgroundImage = 'url("wall.png")';
             } else if (modelCell.isPlayer == 0) {
-                viewCell.style.backgroundColor = 'green';
+                viewCell.style.backgroundImage = 'url("grass.png")';
             }
             if (modelCell.isBomb0 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb0--;
                 if (modelCell.isBomb0 == 0) {
                     explotion(rowCounter, cellCounter, 0);
                 }
             }
             if (modelCell.isBomb1 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb1--;
                 if (modelCell.isBomb1 == 0) {
                     explotion(rowCounter, cellCounter, 1);
                 }
             }
             if (modelCell.isBomb2 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb2--;
                 if (modelCell.isBomb2 == 0) {
                     explotion(rowCounter, cellCounter, 2);
                 }
             }
             if (modelCell.isBomb3 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb3--;
                 if (modelCell.isBomb3 == 0) {
                     explotion(rowCounter, cellCounter, 3);
                 }
             }
             if (modelCell.increaseBombAmount) {
-                viewCell.style.backgroundColor = 'pink';
+                viewCell.style.backgroundImage = 'url("bombup.png")';
                 if (modelCell.isPlayer > 0) {
                     powerUp(modelCell.isPlayer - 1, 'bombUp')
                     modelCell.increaseBombAmount = false;
                 }
             }
             if (modelCell.increaseBlastRadius) {
-                viewCell.style.backgroundColor = 'yellow';
+                viewCell.style.backgroundImage = 'url("blast.png")';
                 if (modelCell.isPlayer > 0) {
                     powerUp(modelCell.isPlayer - 1, 'blastUp')
                     modelCell.increaseBlastRadius = false;
                 }
             }
             if (modelCell.increaseSpeed) {
-                viewCell.style.backgroundColor = 'cyan';
+                viewCell.style.backgroundImage = 'url("boots.png")';
                 if (modelCell.isPlayer > 0) {
                     powerUp(modelCell.isPlayer - 1, 'speedUp')
                     modelCell.increaseSpeed = false;
@@ -92,7 +92,7 @@ function showMatrix() {
                 viewCell.style.backgroundImage = 'url("bombermanP4.png")';
             }
             if (modelCell.isExplotion > 0) {
-                viewCell.style.backgroundColor = 'orange';
+                viewCell.style.backgroundImage = 'url("flame.png")';
                 modelCell.isExplotion--;
                 if (modelCell.isExplotion == 0 && modelCell.isBreakableWall) {
                     modelCell.isBreakableWall = false;
