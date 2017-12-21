@@ -9,7 +9,6 @@ var moveDown = false;
 var moveLeft = false;
 var playerNr = 0;
 init(size);
-startGame(4);
 
 function changePlayer(player) {
     playerNr = player;
