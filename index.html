@@ -10,9 +10,11 @@
             border: 2px solid black;
             margin: 2px;
         }
+
         table {
-            background-color: green;
+            background-image: url(grass.png);
         }
+
         td {
             height: 50px;
             width: 50px;
@@ -20,14 +22,18 @@
     </style>
 </head>
 <body>
-<div id="playerSelect">
-    <h1>Hvor mange spillere?</h1>
-    <div class="playerAmount" onclick="startGame(1)">1</div>
-    <div class="playerAmount" onclick="startGame(2)">2</div>
-    <div class="playerAmount" onclick="startGame(3)">3</div>
-    <div class="playerAmount" onclick="startGame(4)">4</div>
-</div>
+    <div id="playerSelect">
+        <h1>Hvor mange spillere?</h1>
+        <div class="playerAmount" onclick="startGame(1)">1</div>
+        <div class="playerAmount" onclick="startGame(2)">2</div>
+        <div class="playerAmount" onclick="startGame(3)">3</div>
+        <div class="playerAmount" onclick="startGame(4)">4</div>
+    </div>
     <table id="matrix"></table>
-<script src="General.js"></script>
+    <!--<div onclick="changePlayer(0)">1</div>
+    <div onclick="changePlayer(1)">2</div>
+    <div onclick="changePlayer(2)">3</div>
+    <div onclick="changePlayer(3)">4</div>-->
+    <script src="General.js"></script>
 </body>
 </html>
