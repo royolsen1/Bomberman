@@ -20,12 +20,12 @@ function showMatrix() {
             if (modelCell.isWall) {
                 viewCell.style.backgroundColor = 'grey';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundColor = 'lightgrey';
+                viewCell.style.backgroundImage = 'url("wall.png")';
             } else if (modelCell.isPlayer == 0) {
                 viewCell.style.backgroundColor = 'green';
             }
             if (modelCell.isBomb > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb--;
                 if (modelCell.isBomb == 0) {
                     explotion(rowCounter, cellCounter);
@@ -44,7 +44,7 @@ function showMatrix() {
                 viewCell.style.backgroundImage = 'url("bombermanP4.png")';
             }
             if (modelCell.isExplotion > 0) {
-                viewCell.style.backgroundColor = 'orange';
+                viewCell.style.backgroundImage = 'url("flame.png")';
                 modelCell.isExplotion--;
             }
             if (modelCell.isPlayer > 0 && modelCell.isExplotion > 0) {
