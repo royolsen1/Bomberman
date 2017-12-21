@@ -30,28 +30,28 @@ function showMatrix() {
                 viewCell.style.backgroundColor = 'green';
             }
             if (modelCell.isBomb0 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb0--;
                 if (modelCell.isBomb0 == 0) {
                     explotion(rowCounter, cellCounter, 0);
                 }
             }
             if (modelCell.isBomb1 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb1--;
                 if (modelCell.isBomb1 == 0) {
                     explotion(rowCounter, cellCounter, 1);
                 }
             }
             if (modelCell.isBomb2 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb2--;
                 if (modelCell.isBomb2 == 0) {
                     explotion(rowCounter, cellCounter, 2);
                 }
             }
             if (modelCell.isBomb3 > 0) {
-                viewCell.style.backgroundColor = 'black';
+                viewCell.style.backgroundImage = 'url("bomb.png")';
                 modelCell.isBomb3--;
                 if (modelCell.isBomb3 == 0) {
                     explotion(rowCounter, cellCounter, 3);
