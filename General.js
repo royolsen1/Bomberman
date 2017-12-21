@@ -24,11 +24,11 @@ function showMatrix() {
             var viewCell = viewRow.insertCell();
             var modelCell = modelRow.cells[cellCounter];
             if (modelCell.isWall) {
-                viewCell.style.backgroundColor = 'grey';
+                viewCell.style.backgroundImage = 'url("stoneWall.png")';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundImage = 'url("wall.png")';
+                viewCell.style.backgroundImage = 'url("brickWall.png")';
             } else if (modelCell.isPlayer == 0) {
-                viewCell.style.backgroundImage = 'url("grass.png")';
+                viewCell.style.backgroundColor = 'none';
             }
             if (modelCell.isBomb0 > 0) {
                 viewCell.style.backgroundImage = 'url("bomb.png")';
