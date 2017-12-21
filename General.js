@@ -22,7 +22,7 @@ function showMatrix() {
             } else if (modelCell.isBreakableWall) {
                 viewCell.style.backgroundImage = 'url("wall.png")';
             } else if (modelCell.isPlayer == 0) {
-                viewCell.style.backgroundColor = 'green';
+                viewCell.style.backgroundImage = 'url("grass.png")';
             }
             if (modelCell.isBomb > 0) {
                 viewCell.style.backgroundImage = 'url("bomb.png")';
