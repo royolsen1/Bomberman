@@ -7,7 +7,13 @@ var moveUp = false;
 var moveRight = false;
 var moveDown = false;
 var moveLeft = false;
+var playerNr = 0;
 init(size);
+startGame(4);
+
+function changePlayer(player) {
+    playerNr = player;
+}
 
 function showMatrix() {
     matrixView.innerHTML = '';
@@ -20,15 +26,57 @@ function showMatrix() {
             if (modelCell.isWall) {
                 viewCell.style.backgroundColor = 'grey';
             } else if (modelCell.isBreakableWall) {
-                viewCell.style.backgroundImage = 'url("wall.png")';
+                viewCell.style.backgroundColor = 'lightgrey';
             } else if (modelCell.isPlayer == 0) {
-                viewCell.style.backgroundImage = 'url("grass.png")';
+                viewCell.style.backgroundColor = 'green';
             }
-            if (modelCell.isBomb > 0) {
-                viewCell.style.backgroundImage = 'url("bomb.png")';
-                modelCell.isBomb--;
-                if (modelCell.isBomb == 0) {
-                    explotion(rowCounter, cellCounter);
+            if (modelCell.isBomb0 > 0) {
+                viewCell.style.backgroundColor = 'black';
+                modelCell.isBomb0--;
+                if (modelCell.isBomb0 == 0) {
+                    explotion(rowCounter, cellCounter, 0);
+                }
+            }
+            if (modelCell.isBomb1 > 0) {
+                viewCell.style.backgroundColor = 'black';
+                modelCell.isBomb1--;
+                if (modelCell.isBomb1 == 0) {
+                    explotion(rowCounter, cellCounter, 1);
+                }
+            }
+            if (modelCell.isBomb2 > 0) {
+                viewCell.style.backgroundColor = 'black';
+                modelCell.isBomb2--;
+                if (modelCell.isBomb2 == 0) {
+                    explotion(rowCounter, cellCounter, 2);
+                }
+            }
+            if (modelCell.isBomb3 > 0) {
+                viewCell.style.backgroundColor = 'black';
+                modelCell.isBomb3--;
+                if (modelCell.isBomb3 == 0) {
+                    explotion(rowCounter, cellCounter, 3);
+                }
+            }
+            if (modelCell.increaseBombAmount) {
+                viewCell.style.backgroundColor = 'pink';
+                if (modelCell.isPlayer > 0) {
+                    powerUp(modelCell.isPlayer - 1, 'bombUp')
+                    modelCell.increaseBombAmount = false;
+                }
+            }
+            if (modelCell.increaseBlastRadius) {
+                viewCell.style.backgroundColor = 'yellow';
+                if (modelCell.isPlayer > 0) {
+                    powerUp(modelCell.isPlayer - 1, 'blastUp')
+                    modelCell.increaseBlastRadius = false;
+                }
+            }
+            if (modelCell.increaseSpeed) {
+                viewCell.style.backgroundColor = 'cyan';
+                if (modelCell.isPlayer > 0) {
+                    powerUp(modelCell.isPlayer - 1, 'speedUp')
+                    modelCell.increaseSpeed = false;
                 }
             }
             if (modelCell.isPlayer == 1) {
@@ -44,8 +92,12 @@ function showMatrix() {
                 viewCell.style.backgroundImage = 'url("bombermanP4.png")';
             }
             if (modelCell.isExplotion > 0) {
-                viewCell.style.backgroundImage = 'url("flame.png")';
+                viewCell.style.backgroundColor = 'orange';
                 modelCell.isExplotion--;
+                if (modelCell.isExplotion == 0 && modelCell.isBreakableWall) {
+                    modelCell.isBreakableWall = false;
+                    placePowerUp(rowCounter, cellCounter);
+                }
             }
             if (modelCell.isPlayer > 0 && modelCell.isExplotion > 0) {
                 players.nr[modelCell.isPlayer - 1].dead = true;
@@ -53,15 +105,13 @@ function showMatrix() {
             }
         }
     }
-    if (players.nr[0].speedCooldown > 0) {
-        players.nr[0].speedCooldown--;
+    if (players.nr[playerNr].speedCooldown > 0) {
+        players.nr[playerNr].speedCooldown--;
     }
 }
-
 function movingSpeed() {
-    players.nr[0].speedCooldown = players.nr[0].speed;
+    players.nr[playerNr].speedCooldown = players.nr[playerNr].speed;
 }
-
 function initPlayers() {
     players = {};
     players.nr = [];
@@ -90,14 +140,19 @@ function init(size) {
             newCell.isWall = true;
             newCell.isBreakableWall = false;
             newCell.isSpawn = false;
-            newCell.isBomb = 0;
+            newCell.isBomb0 = 0;
+            newCell.isBomb1 = 0;
+            newCell.isBomb2 = 0;
+            newCell.isBomb3 = 0;
             newCell.isExplotion = 0;
+            newCell.increaseBombAmount = false;
+            newCell.increaseBlastRadius = false;
+            newCell.increaseSpeed = false;
             newRow.cells.push(newCell);
         }
         matrixModel.rows.push(newRow);
     }
 }
-
 function placeObjects() {
     for (var rowCounter = 0; rowCounter < matrixModel.rows.length; rowCounter++) {
         var modelRow = matrixModel.rows[rowCounter];
@@ -190,26 +245,24 @@ function startGame(nr) {
     showMatrix();
     game();
 }
-
 function game() {
     playerMove();
     showMatrix();
     setTimeout(function () { game() }, 16);
 }
-
 function playerMove() {
-    var rowIndex = players.nr[0].row;
-    var cellIndex = players.nr[0].cell;
-    if (players.nr[0].speedCooldown == 0) {
-        if (!players.nr[0].dead) {
+    var rowIndex = players.nr[playerNr].row;
+    var cellIndex = players.nr[playerNr].cell;
+    if (players.nr[playerNr].speedCooldown == 0) {
+        if (!players.nr[playerNr].dead) {
             if (moveRight) {
                 if (!matrixModel.rows[rowIndex].cells[cellIndex + 1].isWall &&
                     !matrixModel.rows[rowIndex].cells[cellIndex + 1].isBreakableWall &&
                     !matrixModel.rows[rowIndex].cells[cellIndex + 1].isBomb) {
                     matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0;
                     cellIndex++;
-                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0 + 1;
-                    players.nr[0].cell = cellIndex;
+                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = playerNr + 1;
+                    players.nr[playerNr].cell = cellIndex;
                     movingSpeed();
                 }
             } else if (moveDown) {
@@ -218,8 +271,8 @@ function playerMove() {
                     !matrixModel.rows[rowIndex + 1].cells[cellIndex].isBomb) {
                     matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0;
                     rowIndex++;
-                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0 + 1;
-                    players.nr[0].row = rowIndex;
+                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = playerNr + 1;
+                    players.nr[playerNr].row = rowIndex;
                     movingSpeed();
                 }
             } else if (moveLeft) {
@@ -228,8 +281,8 @@ function playerMove() {
                     !matrixModel.rows[rowIndex].cells[cellIndex - 1].isBomb) {
                     matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0;
                     cellIndex--;
-                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0 + 1;
-                    players.nr[0].cell = cellIndex;
+                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = playerNr + 1;
+                    players.nr[playerNr].cell = cellIndex;
                     movingSpeed();
                 }
             } else if (moveUp) {
@@ -238,30 +291,62 @@ function playerMove() {
                     !matrixModel.rows[rowIndex - 1].cells[cellIndex].isBomb) {
                     matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0;
                     rowIndex--;
-                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = 0 + 1;
-                    players.nr[0].row = rowIndex;
+                    matrixModel.rows[rowIndex].cells[cellIndex].isPlayer = playerNr + 1;
+                    players.nr[playerNr].row = rowIndex;
                     movingSpeed();
                 }
             }
         }
     }
 }
-
 function placeBomb() {
-    var rowIndex = players.nr[0].row;
-    var cellIndex = players.nr[0].cell;
-    if (!players.nr[0].dead) {
-        matrixModel.rows[rowIndex].cells[cellIndex].isBomb = 180;
+    var rowIndex = players.nr[playerNr].row;
+    var cellIndex = players.nr[playerNr].cell;
+    if (players.nr[playerNr].bombAmount > 0) {
+        if (!players.nr[playerNr].dead) {
+            if (playerNr == 0) {
+                matrixModel.rows[rowIndex].cells[cellIndex].isBomb0 = 180;
+            } else if (playerNr == 1) {
+                matrixModel.rows[rowIndex].cells[cellIndex].isBomb1 = 180;
+            } else if (playerNr == 2) {
+                matrixModel.rows[rowIndex].cells[cellIndex].isBomb2 = 180;
+            } else if (playerNr == 3) {
+                matrixModel.rows[rowIndex].cells[cellIndex].isBomb3 = 180;
+            }
+            players.nr[playerNr].bombAmount--;
+        }
     }
 }
-
-function explotion(rowIndex, cellIndex) {
+function placePowerUp(rowIndex, cellIndex) {
+    var isPowerUp = Math.floor(Math.random() * 100);
+    if (isPowerUp > 75) {
+        var powerUpType = Math.floor(Math.random() * 3) + 1
+        if (powerUpType == 1) {
+            matrixModel.rows[rowIndex].cells[cellIndex].increaseBombAmount = true;
+        } else if (powerUpType == 2) {
+            matrixModel.rows[rowIndex].cells[cellIndex].increaseBlastRadius = true;
+        } else if (powerUpType == 3) {
+            matrixModel.rows[rowIndex].cells[cellIndex].increaseSpeed = true;
+        }
+    }
+}
+function powerUp(playerId, powerUpType) {
+    if (powerUpType == 'bombUp') {
+        players.nr[playerId].bombAmount++;
+    } else if (powerUpType == 'blastUp') {
+        players.nr[playerId].blastRadius++;
+    } else if (powerUpType == 'speedUp' && players.nr[playerId].speed > 5) {
+        players.nr[playerId].speed -= 5;
+    }
+}
+function explotion(rowIndex, cellIndex, playerId) {
     matrixModel.rows[rowIndex].cells[cellIndex].isExplotion = 90;
-    var bombBlast = players.nr[0].blastRadius;
+    var bombBlast = players.nr[playerNr].blastRadius;
+    players.nr[playerId].bombAmount++;
     //Right
     for (var i = 0; i < bombBlast; i++) {
         if (matrixModel.rows[rowIndex].cells[cellIndex + 1 + i].isBreakableWall) {
-            matrixModel.rows[rowIndex].cells[cellIndex + 1 + i].isBreakableWall = false;
+            //  matrixModel.rows[rowIndex].cells[cellIndex + 1 + i].isBreakableWall = false;
             matrixModel.rows[rowIndex].cells[cellIndex + 1 + i].isExplotion = 90;
             i = bombBlast;
         } else if (matrixModel.rows[rowIndex].cells[cellIndex + 1 + i].isWall) {
@@ -273,7 +358,7 @@ function explotion(rowIndex, cellIndex) {
     //Left
     for (var i = 0; i < bombBlast; i++) {
         if (matrixModel.rows[rowIndex].cells[cellIndex - 1 - i].isBreakableWall) {
-            matrixModel.rows[rowIndex].cells[cellIndex - 1 - i].isBreakableWall = false;
+            //      matrixModel.rows[rowIndex].cells[cellIndex - 1 - i].isBreakableWall = false;
             matrixModel.rows[rowIndex].cells[cellIndex - 1 - i].isExplotion = 90;
             i = bombBlast;
         } else if (matrixModel.rows[rowIndex].cells[cellIndex - 1 - i].isWall) {
@@ -285,7 +370,7 @@ function explotion(rowIndex, cellIndex) {
     //Up
     for (var i = 0; i < bombBlast; i++) {
         if (matrixModel.rows[rowIndex - 1 - i].cells[cellIndex].isBreakableWall) {
-            matrixModel.rows[rowIndex - 1 - i].cells[cellIndex].isBreakableWall = false;
+            //      matrixModel.rows[rowIndex - 1 - i].cells[cellIndex].isBreakableWall = false;
             matrixModel.rows[rowIndex - 1 - i].cells[cellIndex].isExplotion = 90;
             i = bombBlast;
         } else if (matrixModel.rows[rowIndex - 1 - i].cells[cellIndex].isWall) {
@@ -297,7 +382,7 @@ function explotion(rowIndex, cellIndex) {
     //Down
     for (var i = 0; i < bombBlast; i++) {
         if (matrixModel.rows[rowIndex + 1 + i].cells[cellIndex].isBreakableWall) {
-            matrixModel.rows[rowIndex + 1 + i].cells[cellIndex].isBreakableWall = false;
+            //     matrixModel.rows[rowIndex + 1 + i].cells[cellIndex].isBreakableWall = false;
             matrixModel.rows[rowIndex + 1 + i].cells[cellIndex].isExplotion = 90;
             i = bombBlast;
         } else if (matrixModel.rows[rowIndex + 1 + i].cells[cellIndex].isWall) {
@@ -307,7 +392,6 @@ function explotion(rowIndex, cellIndex) {
         }
     }
 }
-
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 function keyDownHandler(e) {
