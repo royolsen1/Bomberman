@@ -16,8 +16,15 @@
         }
 
         td {
-            height: 50px;
-            width: 50px;
+            height: 49px;
+            width: 49px;
+        }
+        .dev {
+            font-size: 120%;
+            border: 2px solid black;
+            margin: 2px;
+            width: 20%;
+            text-align: center;
         }
     </style>
 </head>
@@ -30,10 +37,10 @@
         <div class="playerAmount" onclick="startGame(4)">4</div>
     </div>
     <table id="matrix"></table>
-    <!--<div onclick="changePlayer(0)">1</div>
-    <div onclick="changePlayer(1)">2</div>
-    <div onclick="changePlayer(2)">3</div>
-    <div onclick="changePlayer(3)">4</div>-->
+    <div class="dev" onclick="changePlayer(0)">1</div>
+    <div class="dev" onclick="changePlayer(1)">2</div>
+    <div class="dev" onclick="changePlayer(2)">3</div>
+    <div class="dev" onclick="changePlayer(3)">4</div>
     <script src="General.js"></script>
 </body>
 </html>
